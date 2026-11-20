@@ -9,6 +9,7 @@ import java.util.List;
 import model.ImportDocument6;
 import model.Invoice6;
 import model.Supplier6;
+import model.TKSupplier6;
 
 public class ImportDocumentDAO6 extends DAO {
 
@@ -16,7 +17,7 @@ public class ImportDocumentDAO6 extends DAO {
         super();
     }
 
-    public List<ImportDocument6> getImportBySupplier(int supplierId, Date startDate, Date endDate) {
+    public List<ImportDocument6> getImportBySupplier(TKSupplier6 tks) {
         List<ImportDocument6> list = new ArrayList<>();
         String sql = "SELECT i.id, i.importedDate, i.totalImportedQuantity, i.tblInvoice6id, "
                    + "s.id AS supplierId, s.supplierName "
@@ -26,9 +27,9 @@ public class ImportDocumentDAO6 extends DAO {
                    + "ORDER BY i.importedDate DESC";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, supplierId);
-            ps.setDate(2, startDate);
-            ps.setDate(3, endDate);
+            ps.setInt(1, tks.getId());
+            ps.setDate(2, new java.sql.Date(tks.getStartDate().getTime()));
+            ps.setDate(3, new java.sql.Date(tks.getEndDate().getTime()));
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

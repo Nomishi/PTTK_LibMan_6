@@ -22,7 +22,7 @@
 <body>
     <div class="container">
         <div class="header-info">
-            Xin chào, <b><%= reader.getFullName() %></b> | 
+            <b><%= reader.getFullName() %></b> | 
             <a href="../thanhvien/doLogout6.jsp">Đăng xuất</a>
         </div>
         <h1>Trang chủ bạn đọc</h1>

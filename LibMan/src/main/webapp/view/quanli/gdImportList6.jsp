@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.sql.Date, java.time.format.DateTimeFormatter, java.util.List, dao.ImportDocumentDAO6, model.ImportDocument6, model.Manager6" %>
+<%@ page import="java.sql.Date, java.time.format.DateTimeFormatter, java.util.List, dao.ImportDocumentDAO6, model.ImportDocument6, model.Manager6, model.TKSupplier6" %>
 <%
     Manager6 manager = (Manager6) session.getAttribute("manager");
     if (manager == null) {
@@ -11,12 +11,17 @@
     String supplierName = request.getParameter("supplierName");
     String startStr = request.getParameter("startDate");
     String endStr = request.getParameter("endDate");
-
     Date startDate = Date.valueOf(startStr);
     Date endDate = Date.valueOf(endStr);
 
+    TKSupplier6 tkSupplier = new TKSupplier6();
+    tkSupplier.setId(supplierId);
+    tkSupplier.setSupplierName(supplierName);
+    tkSupplier.setStartDate(java.sql.Date.valueOf(startStr));
+    tkSupplier.setEndDate(java.sql.Date.valueOf(endStr));
+
     ImportDocumentDAO6 importDAO = new ImportDocumentDAO6();
-    List<ImportDocument6> listImport = importDAO.getImportBySupplier(supplierId, startDate, endDate);
+    List<ImportDocument6> listImport = importDAO.getImportBySupplier(tkSupplier);
 
     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 %>
